@@ -1,0 +1,35 @@
+Package: CDSim
+Type: Package
+Title: Simulating Climate Data for Research and Modelling
+Version: 0.1.1
+Authors@R: 
+    c(
+    person("Isaac", "Osei", role = c("aut", "cre"), email = "ikemillar65@gmail.com"),
+    person("Acheampong", "Baafi-Adomako", role = "aut", email = "acheampongbaafi1@gmail.com"),
+    person("Sivaparvathi", "Dusari", role = "aut", email = "dusari_sivaparvathi@srmap.edu.in")
+    )
+Description: Generate synthetic station-based monthly climate time-series including
+    temperature and rainfall, export to Network Common Data Form (NetCDF), 
+    and provide visualization helpers for climate workflows.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+    ncdf4,
+    lubridate,
+    readr,
+    dplyr,
+    ggplot2,
+    rlang,
+    tidyr,
+    vroom,
+    tibble,
+    stats
+Suggests:
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Config/testthat/edition: 3
