@@ -8,6 +8,7 @@ Authors@R:
     person("Acheampong", "Baafi-Adomako", role = "aut", email = "acheampongbaafi1@gmail.com"),
     person("Sivaparvathi", "Dusari", role = "aut", email = "dusari_sivaparvathi@srmap.edu.in")
     )
+Maintainer: Isaac Osei <ikemillar65@gmail.com>
 Description: Generate synthetic station-based monthly climate time-series including
     temperature and rainfall, export to Network Common Data Form (NetCDF), 
     and provide visualization helpers for climate workflows.
