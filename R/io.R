@@ -5,12 +5,10 @@
 #' @return Returns the file path invisibly.
 #' @export
 #' @examples
-#' \dontrun{
-#'   stations <- create_stations(n = 3)
-#'   sim <- simulate_climate_series(stations)
-#'   tmp <- tempfile(fileext = ".csv")
-#'   write_station_csv(sim, tmp)
-#' }
+#' stations <- create_stations(n = 3)
+#' sim <- simulate_climate_series(stations)
+#' tmp <- tempfile(fileext = ".csv")
+#' write_station_csv(sim, tmp)
 #'
 #' @importFrom vroom vroom_write
 write_station_csv <- function(df, file = "simulated_station_climate.csv") {
@@ -25,9 +23,11 @@ write_station_csv <- function(df, file = "simulated_station_climate.csv") {
 
 #'
 #' Write station NetCDF (station x time)
+#' Exports a simulated climate station dataset to a NetCDF file.
 #' @param df station x time long dataframe returned by simulate_climate_series()
 #' @param out_nc Output NetCDF filename
 #' @param fillvalue Value used for missing entries
+#' @return Returns the file path invisibly.
 #' @export
 #' @importFrom dplyr arrange distinct select slice
 #' @importFrom tidyr pivot_wider

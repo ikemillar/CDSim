@@ -30,10 +30,8 @@ A ggplot object.
 Creates a time-series plot for climate variables with automatic hemisphere-based season detection.
 }
 \examples{
-\dontrun{
 stations <- create_stations(n = 3)
 sim <- simulate_climate_series(stations)
 plot_station_timeseries(sim, station = "Station_1", var = "Avg.Tn")
-}
 
 }

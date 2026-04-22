@@ -1,0 +1,109 @@
+---
+title: "Getting Started with CDSim"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting Started with CDSim}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  fig.width = 8,
+  fig.height = 4,
+  comment = "#>"
+)
+library(CDSim)
+```
+The CDSim package provides an easy workflow for simulating climate data such as temperature and rainfall across multiple synthetic weather stations. It is useful for testing models, teaching climate analysis, generating demo data, and creating datasets with controlled variability.
+
+This vignette demonstrates:
+
+ - how to create synthetic weather stations
+
+ - how to generate multi-year climate time series
+
+ - how to export results to CSV and NetCDF
+
+ - how to perform a quick visualization
+
+<h2 style="font-size:160%; font-weight:bold;"> Creating Weather Stations </h2>
+
+The stations can be created either by:
+
+  - loading from a CSV file,
+  
+  - accepting an existing data frame,
+  
+  - or auto-generating synthetic stations in a bounding box.
+  
+```{r}
+library(CDSim)
+```
+We begin by generating a set of synthetic weather stations. The seed ensures
+reproducibility.
+```{r}
+stations <- create_stations(n = 3, seed = 123)
+stations
+```
+Each station typically contains:
+
+  1. station name
+
+  2. longitude
+
+  3. latitude
+  
+<h2 style="font-size:160%; font-weight:bold;"> Simulating Climate Data </h2>
+
+Once the stations are created, we can generate daily or monthly climate time
+series using built-in stochastic models.
+```{r}
+sim <- simulate_climate_series(stations, start_year = 2019, end_year = 2024)
+head(sim)
+```
+A typical simulated record includes:
+
+  - date
+
+  - min and max temperature
+
+  - rainfall
+
+  - station metadata
+  
+<h2 style="font-size:160%; font-weight:bold;"> Exporting Data to CSV and NetCDF </h2>
+
+CDSim includes convenient exporters such as CSV and NetCDF for storing climate data. This makes it easier for packages such as ncdf4, terra, or stars to read the outputs.
+```{r}
+write_station_csv(sim, file = "climate_data.csv")
+```
+```{r}
+write_station_netcdf(sim, out_nc = "climate_data.nc")
+```
+<h2 style="font-size:160%; font-weight:bold;"> Quick Visualization </h2>
+
+To demonstrate a quick plot, here’s the maximum temperature series of the first station.
+```{r}
+plot_station_timeseries(sim,'Station_1', var = "Avg.Tx")
+```
+<h2 style="font-size:160%; font-weight:bold;"> Validation of Simulated Climate Data </h2>
+
+To assess the physical realism and statistical consistency of the simulated climate data, CDSim provides a validation framework.
+
+The function `validate_climate_internal()` performs a series of diagnostic checks on the simulated dataset, including:
+
+- physical constraints (e.g., temperature bounds and rainfall non-negativity)
+- distributional properties (e.g., variability and skewness)
+- temporal dependence (autocorrelation)
+- inter-variable relationships (e.g., rainfall–temperature coupling)
+- trend behavior and seasonal patterns
+
+```{r}
+validation <- validate_climate_internal(sim)
+validation
+```
+In addition, CDSim supports external validation against observed datasets using the function `validate_climate()`. This allows users to compare simulated data with real-world observations for further evaluation of model performance.
+
+The validation framework is particularly useful in scenarios where observed data are unavailable, providing diagnostic assurance that the simulated outputs adhere to known climatological principles.

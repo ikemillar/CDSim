@@ -6,19 +6,43 @@
 \usage{
 simulate_climate_series(
   stations,
-  start_year = 1981,
-  end_year = 2020,
-  seed = NULL
+  start_year = 1996,
+  end_year = 2025,
+  seed = NULL,
+  temp_trend_per_year = 0.02,
+  rain_trend_per_year = -0.003,
+  phi_temp = 0.85,
+  sd = 0.4,
+  Tmin_min = 18,
+  Tmin_max = 30,
+  Tmax_min = 24,
+  Tmax_max = 42
 )
 }
 \arguments{
 \item{stations}{data.frame from create_stations() (Station, LON, LAT)}
 
-\item{start_year}{integer (e.g., 1981)}
+\item{start_year}{integer (e.g., 1996)}
 
-\item{end_year}{integer (e.g., 2020)}
+\item{end_year}{integer (e.g., 2025)}
 
 \item{seed}{optional numeric seed}
+
+\item{temp_trend_per_year}{temperature trend per year (°C/year warming)}
+
+\item{rain_trend_per_year}{rain trend per year (slight drying trend)}
+
+\item{phi_temp}{AR(1) persistence}
+
+\item{sd}{standard deviation of the AR(1) innovation process controlling temperature variability}
+
+\item{Tmin_min}{minimum value for minimum temperature}
+
+\item{Tmin_max}{maximum value for minimum temperature}
+
+\item{Tmax_min}{minimum value for maximum temperature}
+
+\item{Tmax_max}{maximum value for maximum temperature}
 }
 \value{
 A tidy data.frame with one row per station × month containing:
@@ -29,11 +53,45 @@ Simulate monthly Tmin, Tmax, monthly total rainfall (Sum.Rf) and mean daily rain
 for each station across a year range.
 }
 \details{
-This function simulates synthetic time-series climate data based on...
+This function generates synthetic monthly climate time series using a
+stochastic, physically-informed modelling framework. Temperature is modeled
+as a combination of deterministic seasonality, long-term trend, and
+stochastic variability. The seasonal component is represented using a
+sinusoidal function, while temporal persistence is introduced via an
+autoregressive AR(1) process applied to the innovation term.
+
+Minimum temperature (Avg.Tn) is simulated using a truncated normal
+distribution to enforce physically realistic lower and upper bounds.
+Maximum temperature (Avg.Tx) is generated using a gamma-distributed
+perturbation applied to the mean temperature, producing an asymmetric
+distribution consistent with observed climatological behavior.
+
+Rainfall occurrence is modeled using a first-order Markov chain, allowing
+for realistic wet–dry persistence. Conditional on occurrence, rainfall
+intensity is drawn from a gamma distribution with seasonally varying mean.
+A temporal trend term can be applied to represent long-term climatic changes
+such as gradual drying or wetting.
+
+To ensure physical consistency between variables, a coupling mechanism is
+introduced whereby increased rainfall (proxy for cloud cover) reduces
+maximum temperature through a linear cooling adjustment. This enforces
+a negative dependence between precipitation and temperature consistent
+with atmospheric energy balance principles.
+
+Finally, a minimum diurnal temperature difference constraint is enforced
+after rounding to guarantee that Avg.Tx > Avg.Tn at all time steps, while
+preserving the statistical distribution of the simulated variables.
+
+The default parameterization reflects typical tropical conditions for Ghana,
+but all parameters are user-configurable, allowing adaptation to other
+climatic regions.
+The modelling approach follows established stochastic weather generation
+principles while extending them with distributional asymmetry and
+cross-variable coupling for improved physical realism.
 }
 \examples{
 st <- create_stations(n = 3, seed = 1)
-sim <- simulate_climate_series(st, 1981, 1982, seed = 42)
+sim <- simulate_climate_series(st, 1996, 2025, seed = 42)
 head(sim)
 }
 \seealso{

@@ -20,11 +20,9 @@ Write station CSV
 Exports a simulated climate station dataset to a CSV file.
 }
 \examples{
-\dontrun{
-  stations <- create_stations(n = 3)
-  sim <- simulate_climate_series(stations)
-  tmp <- tempfile(fileext = ".csv")
-  write_station_csv(sim, tmp)
-}
+stations <- create_stations(n = 3)
+sim <- simulate_climate_series(stations)
+tmp <- tempfile(fileext = ".csv")
+write_station_csv(sim, tmp)
 
 }

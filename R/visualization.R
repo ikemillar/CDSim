@@ -15,11 +15,9 @@ NULL
 #' @return A ggplot object.
 #'
 #' @examples
-#' \dontrun{
 #' stations <- create_stations(n = 3)
 #' sim <- simulate_climate_series(stations)
 #' plot_station_timeseries(sim, station = "Station_1", var = "Avg.Tn")
-#' }
 #'
 #' @importFrom ggplot2 ggplot aes geom_line geom_point geom_smooth labs scale_x_date scale_color_manual theme_minimal theme_dark element_text
 #' @importFrom dplyr filter mutate case_when `%>%`

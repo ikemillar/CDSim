@@ -2,7 +2,8 @@
 % Please edit documentation in R/io.R
 \name{write_station_netcdf}
 \alias{write_station_netcdf}
-\title{Write station NetCDF (station x time)}
+\title{Write station NetCDF (station x time)
+Exports a simulated climate station dataset to a NetCDF file.}
 \usage{
 write_station_netcdf(
   df,
@@ -17,8 +18,12 @@ write_station_netcdf(
 
 \item{fillvalue}{Value used for missing entries}
 }
+\value{
+Returns the file path invisibly.
+}
 \description{
 Write station NetCDF (station x time)
+Exports a simulated climate station dataset to a NetCDF file.
 }
 \examples{
 stations <- create_stations(n = 3)

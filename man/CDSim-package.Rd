@@ -8,8 +8,16 @@
 \description{
 Tools for generating and exporting synthetic climate observation datasets.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/ikemillar/CDSimV2}
+  \item Report bugs at \url{https://github.com/ikemillar/CDSim/issues}
+}
+
+}
 \author{
-Isaac Osei and Acheampong Baafi-Adomako
+Isaac Osei and Acheampong Baafi-Adomako and Sivaparvathi Dusari
 }
 \keyword{climate}
 \keyword{netcdf}
